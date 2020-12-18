@@ -59,16 +59,9 @@ if __name__ == '__main__':
     result_log = 'results.txt'
 
     train_images, train_labels, test_images, test_labels = get_data()
-    pca_preprocessing = PCA(n_components=100, svd_solver='randomized', whiten=True)
-    transform_train = pca_preprocessing(train_images)
-    transform_test = pca_preprocessing(test_images)
-    svm_classifier = SVC(kernel='rbf', cache_size=2000)
-    svm_classifier.fit(transform_train, train_labels)
-    train_predictions = svm_classifier.predict(transform_train)
-
 
     if args.preprocessing is None:
-        preprocessing = ['PCA', 'LDA']
+        preprocessing = ['LDA', 'PCA']
     else:
         preprocessing = [args.preprocessing]
 
@@ -80,11 +73,12 @@ if __name__ == '__main__':
     for transform in preprocessing:
         if transform.upper() == 'PCA':
             func = eval(transform)(n_components=100, svd_solver='randomized', whiten=True)
+            train_transformed = func.fit_transform(train_images)
+            test_transformed = func.transform(test_images)
         elif transform.upper() == 'LDA':
-            func = eval(transform)(n_components=100)
-
-        train_transformed = func.fit_transform(train_images)
-        test_transformed = func.transform(test_images)
+            func = eval(transform)(n_components=9)
+            train_transformed = func.fit_transform(train_images, train_labels)
+            test_transformed = func.transform(test_images)
 
         for kernel in kernel_list:
             print(f"Training SVM classifier using {kernel} kernel and {transform} preprocessing")
