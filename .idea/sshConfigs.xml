@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="cmlsub00.umiacs.umd.edu" id="2930ac80-fedf-4da2-b78c-8e36a83833cd" port="22" nameFormat="DESCRIPTIVE" username="arjgpt27" />
+    </configs>
+  </component>
+</project>

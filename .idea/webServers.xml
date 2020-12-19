@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="b4280e03-b0af-4387-9278-d72eafa8b283" name="cml server">
+        <fileTransfer rootFolder="/cmlscratch/arjgpt27/CODE/Digit-Recognition" accessType="SFTP" host="cmlsub00.umiacs.umd.edu" port="22" sshConfigId="2930ac80-fedf-4da2-b78c-8e36a83833cd" sshConfig="arjgpt27@cmlsub00.umiacs.umd.edu:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

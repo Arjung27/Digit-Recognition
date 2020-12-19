@@ -97,7 +97,7 @@ if __name__ == '__main__':
                     "train_acc": train_acc,
                     "test_acc": test_acc,
                     "Kernel": kernel,
-                    "Preprocessing": preprocessing,
+                    "Preprocessing": transform,
                 },
                 args.output,
                 result_log,
