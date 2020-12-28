@@ -33,23 +33,23 @@ def adjust_learning_rate(optimizer, epoch, lr_schedule, lr_factor):
 def test(net, testloader, device, criterion):
     net.eval()
     test_loss = 0
-    natural_correct = 0
+    test_correct = 0
     total = 0
 
     with torch.no_grad():
         for batch_idx, (inputs, targets) in enumerate(testloader):
             inputs, targets = inputs.to(device), targets.to(device)
-            natural_outputs = net(inputs)
-            loss = criterion(natural_outputs, targets)
+            test_outputs = net(inputs)
+            loss = criterion(test_outputs, targets)
             test_loss += loss.item()
-            _, natural_predicted = natural_outputs.max(1)
-            natural_correct += natural_predicted.eq(targets).sum().item()
+            _, test_predicted = test_outputs.max(1)
+            test_correct += test_predicted.eq(targets).sum().item()
             total += targets.size(0)
 
     test_loss = test_loss / (batch_idx + 1)
-    natural_acc = 100. * natural_correct / total
+    test_acc = 100. * test_correct / total
 
-    return natural_acc, test_loss
+    return test_acc, test_loss
 
 
 def train(net, trainloader, optimizer, criterion, device):
@@ -136,7 +136,9 @@ def load_model_from_checkpoint(model, model_path, dataset):
     return net
 
 
-def plot_fig(x_data, y_data, path):
+def plot_fig(x_data, y_data, path, y_axis, x_axis):
     fig = plt.figure()
+    plt.ylabel(y_axis)
+    plt.xlabel(x_axis)
     plt.plot(x_data, y_data)
     plt.savefig(path)

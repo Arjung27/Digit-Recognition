@@ -15,7 +15,7 @@ import cv2
 def main():
     print("\n_________________________________________________\n")
 
-    parser = argparse.ArgumentParser(description='Poisoning Benchmark')
+    parser = argparse.ArgumentParser(description='Digit Recognition')
     parser.add_argument('--lr', default=0.1, type=float, help='learning rate')
     parser.add_argument('--lr_schedule', nargs='+', default=[100, 150], type=int, help='how often to decrease lr')
     parser.add_argument('--lr_factor', default=0.1, type=float, help='factor by which to decrease lr')
@@ -67,9 +67,8 @@ def main():
     if args.transfer_learning:
         args.model = 'ResNet18'
         net = models.resnet18(pretrained=True)
-        for param in net.features.parameters():
+        for param in net.parameters():
             param.requires_grad = False
-
         net.fc = nn.Linear(512, 10)
     else:
         net = get_model(args.model)
@@ -146,13 +145,13 @@ def main():
     indexes_train = np.arange(start_epoch, args.epochs)
     indexes_test = np.arange(args.val_period, args.epochs + 1, args.val_period)
     filename = f'./plots_dataset={args.dataset}_model={args.model}_transfer_learning={args.transfer_learning}/training_acc.png'
-    plot_fig(indexes_train, all_acc, filename)
+    plot_fig(indexes_train, all_acc, filename, y_axis='Training Accuracy', x_axis='Epochs')
     filename = f'./plots_dataset={args.dataset}_model={args.model}_transfer_learning={args.transfer_learning}/test_acc.png'
-    plot_fig(indexes_test, test_acc_all, filename)
+    plot_fig(indexes_test, test_acc_all, filename, y_axis='Testing Accuracy', x_axis='Epochs')
     filename = f'./plots_dataset={args.dataset}_model={args.model}_transfer_learning={args.transfer_learning}/train_loss.png'
-    plot_fig(indexes_train, train_losses, filename)
+    plot_fig(indexes_train, train_losses, filename, y_axis='Training Loss', x_axis='Epochs')
     filename = f'./plots_dataset={args.dataset}_model={args.model}_transfer_learning={args.transfer_learning}/test_loss.png'
-    plot_fig(indexes_test, test_losses, filename)
+    plot_fig(indexes_test, test_losses, filename, y_axis='Testing Loss', x_axis='Epochs')
 
     return
 
